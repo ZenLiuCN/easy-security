@@ -1,4 +1,5 @@
 # easy wapper for spring security
+[![](https://jitpack.io/v/ZenLiuCN/easy-security.svg)](https://jitpack.io/#ZenLiuCN/easy-security)
 make it easy to use spring security with srpingmvc or webflux
 
 ## useage
