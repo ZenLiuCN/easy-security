@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.zenliu.spring.security.configuration.reactive.ReactiveSecurityAutoConfigure,\
+cn.zenliu.spring.security.configuration.servlet.AuthMvcWebSecurityConfigurerAdapter
