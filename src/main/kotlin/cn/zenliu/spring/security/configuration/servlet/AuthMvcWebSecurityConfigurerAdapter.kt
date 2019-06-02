@@ -48,6 +48,11 @@ class AuthMvcWebSecurityConfigurerAdapter(
 	}
 
 	override fun configure(http: HttpSecurity) {
+        if (prop.useCRSF) {
+            http.csrf().and()
+        } else {
+            http.csrf().disable()
+        }
 		http
 			.addFilterAt(
                 AuthMvcAuthenticationFilter(prop, repo),
@@ -60,7 +65,6 @@ class AuthMvcWebSecurityConfigurerAdapter(
 			.and()
 			.httpBasic().disable()
 			.headers().disable()
-			.csrf().disable()
 			.logout().disable()
 			.formLogin().disable()
 			.sessionManagement().disable()

@@ -52,19 +52,21 @@ class ReactiveSecurityAutoConfigure(
         http: ServerHttpSecurity,
         manager: ReactiveAuthenticationManager
     ): SecurityWebFilterChain {
+        if (prop.useCRSF) {
+            http.csrf().and()
+        } else {
+            http.csrf().disable()
+        }
         return http
-            .csrf()
-            .and()
-            .httpBasic().disable()
-            .logout().disable()
-            .formLogin().disable()
             .addFilterAt(
                 AuthServerAuthenticationConverter(
                     manager,
                     prop,
                     repo
                 ), SecurityWebFiltersOrder.FIRST
-            )
+            ).httpBasic().disable()
+            .logout().disable()
+            .formLogin().disable()
             .authenticationManager(manager)
             .authorizeExchange().anyExchange().authenticated()
             .and()
