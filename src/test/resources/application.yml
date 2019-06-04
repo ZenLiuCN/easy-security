@@ -3,6 +3,6 @@ spring:
     allow-bean-definition-overriding: true
 
 authnetication:
-  permitAllUrl:
-    - /actuator/**
-    - /hello
+  permitUrl:
+    ROLE_ADMIN: [/hello]
+

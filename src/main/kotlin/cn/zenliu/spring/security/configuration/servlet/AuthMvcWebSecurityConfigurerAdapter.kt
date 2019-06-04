@@ -54,7 +54,11 @@ class AuthMvcWebSecurityConfigurerAdapter(
             http.csrf().disable()
         }
 
-
+        prop.permitUrl.forEach { role,urls ->
+            http.authorizeRequests()
+                .antMatchers(*urls.toTypedArray())
+                .hasAuthority(role)
+        }
 		http
 			.addFilterAt(
                 AuthMvcAuthenticationFilter(prop, repo),
@@ -63,7 +67,6 @@ class AuthMvcWebSecurityConfigurerAdapter(
 			.anyRequest()
 			.authenticated()
 			.and()*/
-//            .authorizeRequests().antMatchers(*prop.permitAllUrl.toTypedArray()).permitAll().and()
 			.anonymous()
 			.and()
 			.httpBasic().disable()
