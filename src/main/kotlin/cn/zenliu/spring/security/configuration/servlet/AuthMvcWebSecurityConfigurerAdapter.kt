@@ -53,6 +53,11 @@ class AuthMvcWebSecurityConfigurerAdapter(
         } else {
             http.csrf().disable()
         }
+
+            prop.permitAllUrl.forEach{
+                http.antMatcher(it).anonymous()
+            }
+
 		http
 			.addFilterAt(
                 AuthMvcAuthenticationFilter(prop, repo),
@@ -68,6 +73,7 @@ class AuthMvcWebSecurityConfigurerAdapter(
 			.logout().disable()
 			.formLogin().disable()
 			.sessionManagement().disable()
+
 
 	}
 

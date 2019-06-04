@@ -57,6 +57,9 @@ class ReactiveSecurityAutoConfigure(
         } else {
             http.csrf().disable()
         }
+        http.authorizeExchange()
+            .Access().permitAll()
+            .pathMatchers(*prop.permitAllUrl.toTypedArray())
         return http
             .addFilterAt(
                 AuthServerAuthenticationConverter(
