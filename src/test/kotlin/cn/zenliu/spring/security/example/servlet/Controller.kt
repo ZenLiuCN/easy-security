@@ -15,4 +15,8 @@ class Controller(private val auth: AuthConfiguration) {
     @GetMapping("/status")
     fun status() = auth.status()
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @GetMapping("/hello")
+    fun hello() = "hello"
+
 }

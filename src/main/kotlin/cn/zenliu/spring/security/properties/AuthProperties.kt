@@ -21,5 +21,5 @@ class AuthProperties {
     var anonymousAuthority: String = "ANONYMOUS"
     var rolePrefix: String = "ROLE_"
     var useCRSF: Boolean = false
-    var permitAllUrl:Collection<String> =listOf()
+   // var permitAllUrl:Collection<String> =listOf()
 }

@@ -1,3 +1,8 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+
+authnetication:
+  permitAllUrl:
+    - /actuator/**
+    - /hello

@@ -54,9 +54,6 @@ class AuthMvcWebSecurityConfigurerAdapter(
             http.csrf().disable()
         }
 
-            prop.permitAllUrl.forEach{
-                http.antMatcher(it).anonymous()
-            }
 
 		http
 			.addFilterAt(
@@ -66,6 +63,7 @@ class AuthMvcWebSecurityConfigurerAdapter(
 			.anyRequest()
 			.authenticated()
 			.and()*/
+//            .authorizeRequests().antMatchers(*prop.permitAllUrl.toTypedArray()).permitAll().and()
 			.anonymous()
 			.and()
 			.httpBasic().disable()
