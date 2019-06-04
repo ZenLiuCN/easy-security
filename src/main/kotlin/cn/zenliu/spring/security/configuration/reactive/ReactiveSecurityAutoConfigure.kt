@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.*
 import org.springframework.context.annotation.*
 import org.springframework.security.authentication.*
 import org.springframework.security.config.annotation.method.configuration.*
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer
 import org.springframework.security.config.annotation.web.reactive.*
 import org.springframework.security.config.web.server.*
 import org.springframework.security.core.authority.mapping.*
@@ -57,10 +58,16 @@ class ReactiveSecurityAutoConfigure(
         } else {
             http.csrf().disable()
         }
-        prop.permitUrl.forEach { role,urls ->
+        prop.permitUrl.forEach { role, urls ->
             http.authorizeExchange()
                 .pathMatchers(*urls.toTypedArray())
-                .hasAuthority(role)
+                .apply {
+                    when {
+                        role.contains("isAnonymous") -> this.permitAll()
+                        else -> hasAuthority(role)
+                    }
+                }
+
         }
         return http
             .addFilterAt(

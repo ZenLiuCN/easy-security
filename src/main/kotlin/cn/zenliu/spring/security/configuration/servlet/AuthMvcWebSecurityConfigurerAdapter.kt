@@ -57,7 +57,7 @@ class AuthMvcWebSecurityConfigurerAdapter(
         prop.permitUrl.forEach { role,urls ->
             http.authorizeRequests()
                 .antMatchers(*urls.toTypedArray())
-                .hasAuthority(role)
+                .access(role)
         }
 		http
 			.addFilterAt(
