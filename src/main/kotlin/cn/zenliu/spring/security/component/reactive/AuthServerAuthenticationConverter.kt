@@ -23,21 +23,16 @@ class AuthServerAuthenticationConverter(
             when {
                 token == null && prop.exceptionIfTokenMissing -> throw AuthenticationCredentialsNotFoundException("Preauthentication ${prop.tokenName} not found in header")
                 !validation && prop.enableAnonymous -> AnonymousAuthenticationToken(
-                    "${token
-                        ?: exchange.request.id}", "${token
-                        ?: exchange.request.remoteAddress
-                        ?: exchange.request.uri}", mutableSetOf(SimpleGrantedAuthority(prop.anonymousAuthority))
+                    token?: exchange.request.id,
+                    "${token?: exchange.request.remoteAddress?: exchange.request.uri}",
+                    mutableSetOf(SimpleGrantedAuthority(prop.anonymousAuthority))
                 )
                 else -> repo.loadFromToken(token!!)
             }.let {
-                if (it == null) {
-                    throw ResponseStatusException(
-                        HttpStatus.valueOf(prop.tokenFailedStatusCode),
-                        prop.tokenFailedMessage
-                    )
-                } else {
-                    it
-                }
+                it ?: throw ResponseStatusException(
+                    HttpStatus.valueOf(prop.tokenFailedStatusCode),
+                    prop.tokenFailedMessage
+                )
             }.toMono()
         }
     }

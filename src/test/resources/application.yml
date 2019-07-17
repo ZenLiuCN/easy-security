@@ -1,8 +1,8 @@
 spring:
   main:
     allow-bean-definition-overriding: true
-
 authnetication:
   permitUrl:
     ROLE_ADMIN: [/hello]
-
+server:
+  port: 8010
