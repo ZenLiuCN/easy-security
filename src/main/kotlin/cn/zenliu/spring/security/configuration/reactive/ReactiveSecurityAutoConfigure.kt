@@ -5,6 +5,7 @@ import cn.zenliu.spring.security.properties.AuthProperties
 import cn.zenliu.spring.security.repository.AuthAuthenticationRepository
 
 import org.springframework.boot.autoconfigure.condition.*
+import org.springframework.boot.context.properties.*
 import org.springframework.context.annotation.*
 import org.springframework.security.authentication.*
 import org.springframework.security.config.annotation.method.configuration.*
@@ -21,6 +22,7 @@ import reactor.netty.http.server.*
 @Configuration
 @ConditionalOnClass(HttpServer::class, SecurityWebFilterChain::class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
+@EnableConfigurationProperties(AuthProperties::class)
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity()
 class ReactiveSecurityAutoConfigure(
