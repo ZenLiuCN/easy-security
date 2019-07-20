@@ -6,6 +6,7 @@ import cn.zenliu.spring.security.properties.AuthProperties
 import cn.zenliu.spring.security.repository.AuthAuthenticationRepository
 
 import org.springframework.boot.autoconfigure.condition.*
+import org.springframework.boot.context.properties.*
 import org.springframework.context.annotation.*
 import org.springframework.security.access.expression.*
 import org.springframework.security.authentication.*
@@ -24,6 +25,7 @@ import org.springframework.security.web.server.*
 @Configuration
 @ConditionalOnClass(SecurityWebFilterChain::class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@EnableConfigurationProperties(AuthProperties::class)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
 	prePostEnabled = true,
@@ -59,11 +61,11 @@ class AuthMvcWebSecurityConfigurerAdapter(
                 .antMatchers(*urls.toTypedArray())
                 .access(role)
         }
-		http
-			.addFilterAt(
-                AuthMvcAuthenticationFilter(prop, repo),
-				RequestHeaderAuthenticationFilter::class.java)
-			/*.authorizeRequests()// 无需配置,交给控制层进行控制
+		http.addFilterAt(
+				AuthMvcAuthenticationFilter(prop, repo),
+				RequestHeaderAuthenticationFilter::class.java
+
+		)	/*.authorizeRequests()// 无需配置,交给控制层进行控制
 			.anyRequest()
 			.authenticated()
 			.and()*/
