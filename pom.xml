@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.ZenLiuCN</groupId>
     <artifactId>easy-security</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
 
     <repositories>
@@ -236,7 +236,7 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <phase>deploy</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>jar-no-fork</goal>
                                 <!--<goal>jar</goal>-->
@@ -448,22 +448,17 @@
                 <artifactId>build-helper-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jetbrains.dokka</groupId>
-                <artifactId>dokka-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
+
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
