@@ -53,23 +53,37 @@ class Controller(private val auth: AuthConfiguration) {
 ```kotlin
 @ConfigurationProperties("authnetication")
 class AuthProperties {
-    var tokenName: String = "token"
-    var tokenFailedStatusCode: Int = HttpStatus.UNAUTHORIZED.value()
-    var tokenFailedMessage: String = ""
-    var exceptionIfTokenMissing: Boolean = false
-    var enableAnonymous: Boolean = true
-    var anonymousAuthority: String = "ANONYMOUS"
-    var rolePrefix: String = "ROLE_"
-    var useCRSF: Boolean = false
-    /**
-    * Map of Authorty for urls [Role to Collection<Url>]
-    * eg: authnetication:
-    *        permitUrl:
-    *          ROLE_ADMIN: [/hello]
-    */
-    var permitUrl:Map<String,Collection<String>> = mapOf()
-
+	var tokenName: String = "token"
+	var tokenFailedStatusCode: Int = HttpStatus.UNAUTHORIZED.value()
+	var tokenFailedMessage: String = ""
+	var exceptionIfTokenMissing: Boolean = false
+	var enableAnonymous: Boolean = true
+	var anonymousAuthority: String = "ANONYMOUS"
+	var rolePrefix: String = "ROLE_"
+	var useCRSF: Boolean = false
+	var permitUrl: Map<String, Collection<String>> = mapOf()
+	/**
+	 * those url will redirect to https
+	 */
+	var tlsOnly: Collection<String> = mutableListOf()
+	//must defined while use tlsOnly
+	var http: Int=8080
+	var https:Int=8081
 }
+
+```
+```yaml
+spring:
+  main:
+    allow-bean-definition-overriding: true
+authnetication:
+  permitUrl:
+    ROLE_ADMIN:
+        - /hello
+  tlsOnly:
+    - /https
+  http: 8011
+  https: 8010
 ```
 ## more detialed example plz to see test in source
 **note** should comment `starter-web` dependency before test on reactive environment

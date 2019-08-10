@@ -15,4 +15,9 @@ class Controller(private val auth: AuthConfiguration) {
     @GetMapping("/status")
     fun status() = auth.status().toMono()
 
+	@GetMapping("/https")
+	fun https() = "hello https".toMono()
+
+	@GetMapping("/http")
+	fun http() = "hello http".toMono()
 }

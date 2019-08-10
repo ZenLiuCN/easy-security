@@ -18,4 +18,10 @@ class Controller(private val auth: AuthConfiguration) {
     @GetMapping("/hello")
     fun hello() = "hello"
 
+	@GetMapping("/https")
+	fun https() = "hello https"
+
+	@GetMapping("/http")
+	fun http() = "hello http"
+
 }

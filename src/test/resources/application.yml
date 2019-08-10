@@ -4,5 +4,16 @@ spring:
 authnetication:
   permitUrl:
     ROLE_ADMIN: [/hello]
+  tlsOnly:
+    - /https
+  http: 8011
+  https: 8010
 server:
   port: 8010
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-type: PKCS12
+    key-alias: tomcat
+    key-store-password: 123456
+http:
+  port: 8011

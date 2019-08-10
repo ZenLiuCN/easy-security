@@ -23,15 +23,15 @@ import org.springframework.security.web.server.*
 
 
 @Configuration
-@ConditionalOnClass(SecurityWebFilterChain::class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@ConditionalOnClass(SecurityWebFilterChain::class)
 @EnableConfigurationProperties(AuthProperties::class)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
 	prePostEnabled = true,
 	securedEnabled = false,
 	jsr250Enabled = false)
-class AuthMvcWebSecurityConfigurerAdapter(
+class ServletWebSecurityAutoConfigurer(
     private val prop: AuthProperties,
     private val repo: AuthAuthenticationRepository
 ) : WebSecurityConfigurerAdapter(true) {
@@ -61,6 +61,16 @@ class AuthMvcWebSecurityConfigurerAdapter(
                 .antMatchers(*urls.toTypedArray())
                 .access(role)
         }
+		prop.tlsOnly.forEach {
+			http
+				.portMapper()
+				.http(prop.http)
+				.mapsTo(prop.https)
+				.and()
+				.requiresChannel()
+				.antMatchers(it)
+				.requiresSecure()
+		}
 		http.addFilterAt(
 				AuthMvcAuthenticationFilter(prop, repo),
 				RequestHeaderAuthenticationFilter::class.java
